@@ -71,3 +71,12 @@ The Drupal Extension is an integration layer between [Behat](http://behat.org), 
 	   password_field: "Enter your password"
 	   username_field: "Nickname"
    ```
+
+1. Markup id's, such as the *Search form* or the *Search submit button* can be set via `behat.yml`.
+
+   ```
+   Drupal\DrupalExtension\Extension:
+      markup_id:
+        search_input: 'edit-search-block-form--2'
+        search_submit: 'edit-submit'
+   ```

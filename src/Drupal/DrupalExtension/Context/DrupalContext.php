@@ -89,6 +89,20 @@ class DrupalContext extends MinkContext implements DrupalAwareInterface {
   }
 
   /**
+   * Returns a specific markup id.
+   *
+   * @param string $name
+   *   Markup id value name
+   */
+  public function getDrupalMarkupId($name) {
+    $text = $this->getDrupalParameter('markup_id');
+    if (!isset($text[$name])) {
+      throw new \Exception(sprintf('No such markup id: %s', $name));
+    }
+    return $text[$name];
+  }
+
+  /**
    * Get active Drupal Driver.
    */
   public function getDriver($name = NULL) {
@@ -551,6 +565,21 @@ class DrupalContext extends MinkContext implements DrupalAwareInterface {
     else {
       throw new \Exception(sprintf('Failed to find a row containing "%s"', $row_text));
     }
+  }
+
+  /**
+   * Attempt a site-wide search
+   *
+   * @When /^I search sitewide for "([^"]*)"$/
+   */
+  public function iSearchSitewideFor($searchterm) {
+    $element = $this->getSession()->getPage();
+    $element->fillField($this->getDrupalMarkupId('search_input'), $searchterm);
+    $submit = $element->findById($this->getDrupalMarkupId('search_submit'));
+    if (empty($submit)) {
+      throw new Exception('No submit button at ' . $this->getSession()->getCurrentUrl());
+    }
+    $submit->click();
   }
 
   /**

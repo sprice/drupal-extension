@@ -95,6 +95,14 @@ class Extension implements ExtensionInterface {
             end()->
           end()->
         end()->
+        arrayNode('markup_id')->
+          children()->
+            scalarNode('search_input')->
+            end()->
+            scalarNode('search_submit')->
+            end()->
+          end()->
+        end()->
         // Drupal drivers.
         arrayNode('blackbox')->
         end()->
